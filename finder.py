@@ -16,15 +16,19 @@ def look_for_guns(urls):
     for url in urls:
         res = requests.get(url)
         if "BACKORDER" or "OUT OF STOCK" in res.text:
-            report = report += url " is not in stock\n"
+            report = report + url + " is not in stock\n"
         elif "ADD TO CART" or "Total qty available" or "checkoutButton" in res.text:
-            report = report += url " has it! BUY IT! BUY IT!\n"
+            report = report + url + " has it! BUY IT! BUY IT!\n"
         else:
-            report = report += url " could not be parsed.\n"
+            report = report + url + " could not be parsed.\n"
     return report
 
-def get_creds()
-    with f as open("config.txt")
+def get_creds():
+    with open('config.ini','r') as config:
+        creds = config.readlines()
+        email = creds[0].rstrip()
+        pwd = creds[1].rstrip()
+        return {"email": email, "pwd": pwd}
 
 def send_email(message):
     user = "<YOUR_EMAIL>"
@@ -40,7 +44,7 @@ def send_email(message):
     print("Email sent!")
     conn.close()
 
-schedule.every().day.at("07:00").do(look_for_guns(p90_urls))
+# schedule.every().day.at("07:00").do(look_for_guns(p90_urls))
 
 # while True:
 
@@ -48,3 +52,4 @@ schedule.every().day.at("07:00").do(look_for_guns(p90_urls))
     # time.sleep(1)
 # getGuns()
 
+print(get_creds()['pwd'])
