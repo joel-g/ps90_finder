@@ -1,8 +1,5 @@
-from selenium import webdriver
-from bs4 import BeautifulSoup
 from smtplib import SMTP as SMTP
-import schedule, requests
-import time
+import schedule, requests, time
 
 p90_urls = ("https://www.wholesalehunter.com/Product/Details/71136",
 "https://www.wholesalehunter.com/Product/Details/93893",
@@ -14,29 +11,24 @@ p90_urls = ("https://www.wholesalehunter.com/Product/Details/71136",
 "https://www.ableammo.com/catalog/herstal-ps90-semi-auto-rifle-wred-dot-3848950462-57mmx28mm-synthetic-stock-black-finish-p-135724.html")
 
 
+def look_for_guns(urls):
+    report = ""
+    for url in urls:
+        res = requests.get(url)
+        if "BACKORDER" or "OUT OF STOCK" in res.text:
+            report = report += url " is not in stock\n"
+        elif "ADD TO CART" or "Total qty available" or "checkoutButton" in res.text:
+            report = report += url " has it! BUY IT! BUY IT!\n"
+        else:
+            report = report += url " could not be parsed.\n"
+    return report
 
+def get_creds()
+    with f as open("config.txt")
 
-
-
-g26 = "https://ammoseek.com/guns/9mm-luger/Glock?ikw=26"
-
-def getGuns():
-    driver = webdriver.Chrome('./chromedriver')
-    driver.get(g26)
-    html = driver.page_source
-    soup = BeautifulSoup(html, "html.parser")
-    for price in soup.find_all("td"):
-        print(price.contents)
-        if "447.99" in price.contents[0]:
-            print("found one")
-    driver.quit()
-
-
-
-def sendEmail():
+def send_email(message):
     user = "<YOUR_EMAIL>"
     pswrd = "<YOUR_PASSWORD>"
-    message = "Found a Glock 26"
     conn = SMTP(host="smtp.gmail.com", port=587)
     conn.ehlo()
     conn.starttls()
@@ -48,7 +40,7 @@ def sendEmail():
     print("Email sent!")
     conn.close()
 
-schedule.every().day.at("07:00").do(getGuns)
+schedule.every().day.at("07:00").do(look_for_guns(p90_urls))
 
 # while True:
 
@@ -56,11 +48,3 @@ schedule.every().day.at("07:00").do(getGuns)
     # time.sleep(1)
 # getGuns()
 
-for url in p90_urls:
-    res = requests.get(url)
-    if "BACKORDER" or "OUT OF STOCK" in res.text:
-        print("not in stock")
-    elif "ADD TO" in res.text:
-        print("in stock")
-    else:
-        print("inconclusive")
