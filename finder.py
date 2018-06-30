@@ -28,19 +28,17 @@ def get_creds():
         creds = config.readlines()
         email = creds[0].rstrip()
         pwd = creds[1].rstrip()
-        return {"email": email, "pwd": pwd}
+        rec = creds[2].rstrip()
+        return {"email": email, "pwd": pwd, "rec": rec}
 
 def send_email(message):
-    user = "<YOUR_EMAIL>"
-    pswrd = "<YOUR_PASSWORD>"
+    creds = get_creds()
     conn = SMTP(host="smtp.gmail.com", port=587)
     conn.ehlo()
     conn.starttls()
     conn.ehlo()
-    sender = user
-    recipient = user
-    conn.login(user,pswrd)
-    conn.sendmail(sender,recipient,message)
+    conn.login(creds['email'],creds['pwd'])
+    conn.sendmail(creds['email'],creds['rec'],message)
     print("Email sent!")
     conn.close()
 
@@ -52,4 +50,4 @@ def send_email(message):
     # time.sleep(1)
 # getGuns()
 
-print(get_creds()['pwd'])
+print(look_for_guns(p90_urls))
