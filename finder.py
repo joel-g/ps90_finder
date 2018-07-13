@@ -8,7 +8,8 @@ p90_urls = ("https://www.wholesalehunter.com/Product/Details/71136",
 "https://www.ableammo.com/catalog/herstal-ps90-rifle-3848950060-57mmx28mm-1604-synthetic-stock-black-finish-p-137454.html",
 "https://www.ableammo.com/catalog/herstal-ps90-semi-auto-rifle-3848950460-57mmx28mm-1604-synthetic-stock-black-finish-p-119529.html",
 "https://www.ableammo.com/catalog/herstal-ps90-standard-rifle-3848950465-57mmx28mm-black-synthetic-stock-black-finish-rds-p-152598.html",
-"https://www.ableammo.com/catalog/herstal-ps90-semi-auto-rifle-wred-dot-3848950462-57mmx28mm-synthetic-stock-black-finish-p-135724.html")
+"https://www.ableammo.com/catalog/herstal-ps90-semi-auto-rifle-wred-dot-3848950462-57mmx28mm-synthetic-stock-black-finish-p-135724.html",
+"https://palmettostatearmory.com/fnh-ps90.html")
 
 def get_report(urls):
     report = ""
