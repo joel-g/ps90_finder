@@ -44,6 +44,7 @@ def send_email(message):
 def look_for_guns():
     report = get_report(p90_urls)
     send_email(report)
+    print(report)
 
 schedule.every().day.at("07:00").do(look_for_guns)
 
