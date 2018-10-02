@@ -21,11 +21,14 @@ sneaker_urls = ("https://www.neimanmarcus.com/p/off-white-mens-suede-leather-hig
 "https://www.mrporter.com/en-us/mens/off_white/industrial-leather--suede-and-ripstop-high-top-sneakers/1066117?ppv=2",
 )
 
+matches = ["backorder", "out of stock", "item not available", "sold out"]
+
+
 def get_report(urls):
     report = ""
     for url in urls:
         res = requests.get(url)
-        if "backorder" or "out of stock" or "item not available" or "sold out" in res.text.lower:
+        if any(match in res.text.lower for match in matches):
             report = report + url + " is not in stock\n"
         elif "add to cart" or "total qty available" or "checkoutButton" in res.text.lower:
             report = report + url + " has it! BUY IT! BUY IT!\n"
