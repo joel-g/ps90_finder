@@ -28,9 +28,9 @@ def get_report(urls):
     report = ""
     for url in urls:
         res = requests.get(url)
-        if any(match in res.text.lower for match in matches):
+        if any(match in res.text.lower() for match in matches):
             report = report + url + " is not in stock\n"
-        elif "add to cart" or "total qty available" or "checkoutButton" in res.text.lower:
+        elif "add to cart" or "total qty available" or "checkoutButton" in res.text.lower():
             report = report + url + " has it! BUY IT! BUY IT!\n"
         else:
             report = report + url + " could not be parsed.\n"
